@@ -3,7 +3,11 @@ title: "sqldeployR"
 output: github_document
 ---
 
-```{r}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, eval=FALSE}
 # install.packages("devtools")
 devtools::install_github("edouardschuppert/sqldeployR")
 ```
