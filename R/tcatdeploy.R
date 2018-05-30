@@ -163,3 +163,5 @@ catdeploy <- function(bin,
   print(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
 
 }
+
+# Ajouter choose_periode pour l'importation (selection SQL)
