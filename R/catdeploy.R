@@ -61,7 +61,9 @@ catdeploy <- function(bin,
                                     CONVERT(retweet_count, UNSIGNED INTEGER),
                                     CONVERT(favorite_count, UNSIGNED INTEGER),
                                     CONVERT(filter_level, CHAR)
-                                    FROM ",bin,"_tweets;"))
+                                    FROM ",bin,"_tweets;")) %>%
+    dplyr::mutate(created_at = lubridate::as_datetime(created_at),
+                  from_user_created_at = lubridate::as_datetime(from_user_created_at))
   DBI::dbDisconnect(conn)
 
   # Formating datas
