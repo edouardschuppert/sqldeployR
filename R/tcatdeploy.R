@@ -1,18 +1,18 @@
-#' catdeploy
+#' tcatdeploy
 #'
-#' Deploy a TCAT database as a csv/tsv file, with an UTF-8 encoding
+#' Deploy a DMI-TCAT database in an R directory as a csv / tsv file with UTF-8 encoding.
 #'
 #' @param bin The bin name
-#' @param hostname The host of the database. Default set to localhost
-#' @param username The name of the database. Default set to tcatdbuser
-#' @param pass Password of the database
+#' @param hostname The host name of the database. Default set to localhost
+#' @param username The username to access the database. Default set to tcatdbuser
+#' @param pass The password to access the database
 #' @param database The name of the database. Default set to twittercapture
-#' @param extension What kind of file to you wand to work with ? Default set to a tsv format
-#' @param path Path of the data file. Defaults set to current directory
-#' @return Return csv/tsv file, with an UTF-8 encoding
+#' @param extension The chosen extension for the deployment of the database. Default set to a tsv format
+#' @param path File path. Defaults set to current directory
+#' @return Returns a csv / tsv file, with a UTF-8 encoding
 #' @export
 
-catdeploy <- function(bin,
+tcatdeploy <- function(bin,
                       hostname = "localhost",
                       username = "tcatdbuser",
                       pass,
@@ -20,16 +20,22 @@ catdeploy <- function(bin,
                       extension = "tsv",
                       path = "./") {
 
-  # Connection to MySQL
-  conn <- RMySQL::dbConnect(RMySQL::MySQL(),
+  # Formating path
+  if (stringr::str_detect(path, "/$") == FALSE) path <- paste0(path, "/")
+
+  # Connection to database
+  conn <- RMariaDB::dbConnect(RMariaDB::MySQL(),
                     dbname = database,
                     user = username,
                     password = pass,
                     host = hostname,
                     encoding = "utf-8")
 
-  # Extraction of datas
   DBI::dbGetQuery(conn,"set names utf8")
+
+  conn_table <- dplyr::tbl(conn, paste0(bin, "_tweets"))
+
+  # Sending request & processing data
   extract <- DBI::dbGetQuery(conn, paste0("SELECT
                                     CONVERT(id, CHAR),
                                     created_at,
@@ -96,8 +102,7 @@ catdeploy <- function(bin,
     dplyr::mutate(retweet_from_user_name = stringr::str_remove_all(retweet_from_user_name,"(?:(?::|,)|;)")) %>%
     dplyr::mutate(retweet_from_user_name = stringr::str_remove_all(retweet_from_user_name,"\\)"))
 
-  # Formating path
-  if (stringr::str_detect(path, "/$") == FALSE) path <- paste0(path, "/")
+
 
   # Case 1 : updating
   if (file.exists(paste0(path, bin, "_datas.", extension)) == TRUE) {
@@ -163,5 +168,3 @@ catdeploy <- function(bin,
   print(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
 
 }
-
-# Ajouter choose_periode pour l'importation (selection SQL)
