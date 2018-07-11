@@ -10,21 +10,21 @@ tcatdeploy(bin, hostname = "localhost", username = "tcatdbuser", pass,
 \arguments{
 \item{bin}{The bin name}
 
-\item{hostname}{The host of the database. Default set to localhost}
+\item{hostname}{The host name of the database. Default set to localhost}
 
-\item{username}{The name of the database. Default set to tcatdbuser}
+\item{username}{The username to access the database. Default set to tcatdbuser}
 
-\item{pass}{Password of the database}
+\item{pass}{The password to access the database}
 
 \item{database}{The name of the database. Default set to twittercapture}
 
-\item{extension}{What kind of file to you wand to work with ? Default set to a tsv format}
+\item{extension}{The chosen extension for the deployment of the database. Default set to a tsv format}
 
-\item{path}{Path of the data file. Defaults set to current directory}
+\item{path}{File path. Defaults set to current directory}
 }
 \value{
-Return csv/tsv file, with an UTF-8 encoding
+Returns a csv / tsv file, with a UTF-8 encoding
 }
 \description{
-Deploy a TCAT database as a csv/tsv file, with an UTF-8 encoding
+Deploy a DMI-TCAT database in an R directory as a csv / tsv file with UTF-8 encoding.
 }

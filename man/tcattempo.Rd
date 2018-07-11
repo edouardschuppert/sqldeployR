@@ -11,29 +11,29 @@ tcattempo(bin, hostname = "localhost", username = "tcatdbuser", pass,
 \arguments{
 \item{bin}{The bin name}
 
-\item{hostname}{The host of the database. Default set to localhost}
+\item{hostname}{The host name of the database. Default set to localhost}
 
-\item{username}{The name of the database. Default set to tcatdbuser}
+\item{username}{The username to access the database. Default set to tcatdbuser}
 
-\item{pass}{Password of the database}
+\item{pass}{The password to access the database}
 
 \item{database}{The name of the database. Default set to twittercapture}
 
-\item{extension}{What kind of file to you wand to work with ? Default set to a tsv format}
+\item{extension}{The chosen extension for the deployment of the database. Default set to a tsv format}
 
-\item{path}{Path of the data file. Defaults set to current directory}
+\item{path}{File path. Defaults set to current directory}
 
 \item{startday}{The first day of the period you want to select}
 
 \item{endday}{The last day of the period you want to select}
 
-\item{starttime}{The start time of the period you want to select. Default set to 00:00:00}
+\item{starttime}{The time of the first day of the period you want to select. Default set to 00:00:00}
 
-\item{endtime}{The end time of the period you want to select. Default set to 23:59:59}
+\item{endtime}{The time of the last day of the period you want to select. Default set to 23:59:59}
 }
 \value{
-Return csv/tsv file, with an UTF-8 encoding
+Returns a csv / tsv file, with a UTF-8 encoding
 }
 \description{
-Deploy a TCAT database as a csv/tsv file, with an UTF-8 encoding and a selection of a time period
+Deploy a DMI-TCAT database in an R directory, as a csv / tsv file, with UTF-8 encoding and a period selection.
 }
