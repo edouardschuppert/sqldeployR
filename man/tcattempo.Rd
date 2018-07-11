@@ -6,7 +6,7 @@
 \usage{
 tcattempo(bin, hostname = "localhost", username = "tcatdbuser", pass,
   database = "twittercapture", extension = "tsv", path = "./", startday,
-  endday, starttime = "00:00:00", endtime = "23:59:59")
+  endday = Sys.Date(), starttime = "00:00:00", endtime = "23:59:59")
 }
 \arguments{
 \item{bin}{The bin name}

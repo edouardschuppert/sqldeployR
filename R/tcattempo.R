@@ -24,7 +24,7 @@ tcattempo <- function(bin,
                       extension = "tsv",
                       path = "./",
                       startday,
-                      endday,
+                      endday = Sys.Date(),
                       starttime = "00:00:00",
                       endtime = "23:59:59") {
 
@@ -33,7 +33,7 @@ tcattempo <- function(bin,
   endtimestamp <- lubridate::as_datetime(paste(endday, endtime))
 
   # Connection to database
-  conn <- RMariaDB::dbConnect(RMariaDB::MySQL(),
+  conn <- RMySQL::dbConnect(RMySQL::MySQL(),
                             dbname = database,
                             user = username,
                             password = pass,
@@ -45,7 +45,7 @@ tcattempo <- function(bin,
   conn_table <- dplyr::tbl(conn, paste0(bin, "_tweets"))
 
   # Sending request & processing data
-  corpus <- conn_table %>%
+  extract <- conn_table %>%
     dplyr::mutate(id = as.character(id),
                   from_user_id = as.character(from_user_id),
                   retweet_id = as.character(retweet_id),
