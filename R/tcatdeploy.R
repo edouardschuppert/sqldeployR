@@ -24,7 +24,7 @@ tcatdeploy <- function(bin,
   if (stringr::str_detect(path, "/$") == FALSE) path <- paste0(path, "/")
 
   # Connection to database
-  conn <- RMariaDB::dbConnect(RMariaDB::MySQL(),
+  conn <- RMySQL::dbConnect(RMySQL::MySQL(),
                     dbname = database,
                     user = username,
                     password = pass,
