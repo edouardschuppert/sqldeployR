@@ -17,6 +17,7 @@ tcatdeploy <- function(bin,
                       username = "tcatdbuser",
                       pass,
                       database = "twittercapture",
+                      deploy = TRUE,
                       extension = "tsv",
                       path = "./") {
 
@@ -104,12 +105,18 @@ tcatdeploy <- function(bin,
         dplyr::distinct(id, .keep_all = TRUE) %>%
         dplyr::arrange(plyr::desc(created_at))
 
-      # Save
-      if (extension == "tsv") {
-        readr::write_tsv(BDD, paste0(path, bin, "_datas.tsv"))
-      }
-      if (extension == "csv") {
-        readr::write_csv(BDD, paste0(path, bin, "_datas.csv"))
+      if (deploy == TRUE) {
+
+        # Save
+        if (extension == "tsv") {
+          readr::write_tsv(BDD, paste0(path, bin, "_datas.tsv"))
+        }
+        if (extension == "csv") {
+          readr::write_csv(BDD, paste0(path, bin, "_datas.csv"))
+        }
+
+        print(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
+
       }
 
     }
@@ -117,20 +124,33 @@ tcatdeploy <- function(bin,
     # Case 2 : creation
     if (file.exists(paste0(path, bin, "_datas.", extension)) == FALSE) {
 
-      # Save
-      if (extension == "tsv") {
-        readr::write_tsv(extract, paste0(path, bin, "_datas.tsv"))
+      if (deploy == TRUE) {
+
+        # Save
+        if (extension == "tsv") {
+          readr::write_tsv(extract, paste0(path, bin, "_datas.tsv"))
+        }
+        if (extension == "csv") {
+          readr::write_csv(extract, paste0(path, bin, "_datas.csv"))
+        }
+
+        print(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
+
       }
-      if (extension == "csv") {
-        readr::write_csv(extract, paste0(path, bin, "_datas.csv"))
-      }
+
+      BDD <- extract
 
     }
 
-    print(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
+    if (deploy == FALSE) {
+
+      print(paste0("TCAT ", bin, " NOT deployed as file."))
+
+    }
+
+    BDD
 
   }
 
-# Deploiement + variable dans l'environnement
 # Alléger par anti_join
 # Ajouter extension Rdata

@@ -5,7 +5,8 @@
 \title{tcatdeploy}
 \usage{
 tcatdeploy(bin, hostname = "localhost", username = "tcatdbuser", pass,
-  database = "twittercapture", extension = "tsv", path = "./")
+  database = "twittercapture", deploy = TRUE, extension = "tsv",
+  path = "./")
 }
 \arguments{
 \item{bin}{The bin name}
