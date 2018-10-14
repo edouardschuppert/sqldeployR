@@ -19,7 +19,9 @@ tcatdeploy(bin, hostname = "localhost", username = "tcatdbuser", pass,
 
 \item{database}{The name of the database. Default set to twittercapture}
 
-\item{extension}{The chosen extension for the deployment of the database. Possible choices : "csv", "tsv". Default set to a "tsv" format}
+\item{deploy}{Save the datas as a file. Default set to TRUE}
+
+\item{extension}{The chosen extension for the deployment of the database. Possible choices : "csv", "tsv", "rda". Default set to a "tsv" format}
 
 \item{path}{File path. Defaults set to current directory}
 }

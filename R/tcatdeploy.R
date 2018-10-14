@@ -7,7 +7,8 @@
 #' @param username The username to access the database. Default set to tcatdbuser
 #' @param pass The password to access the database
 #' @param database The name of the database. Default set to twittercapture
-#' @param extension The chosen extension for the deployment of the database. Possible choices : "csv", "tsv". Default set to a "tsv" format
+#' @param deploy Save the datas as a file. Default set to TRUE
+#' @param extension The chosen extension for the deployment of the database. Possible choices : "csv", "tsv", "rda". Default set to a "tsv" format
 #' @param path File path. Defaults set to current directory
 #' @return Returns a csv / tsv file, with a UTF-8 encoding
 #' @export
@@ -95,6 +96,11 @@ tcatdeploy <- function(bin,
           retweet_id = readr::col_character()
         ))
       }
+      if (extension == "rda") {
+        load(paste0(path, bin, "_datas.rda"))
+        BDD_old <- BDD
+        rm(BDD)
+      }
 
       # Isolating new tweets
       new_tweets <- extract %>%
@@ -114,6 +120,9 @@ tcatdeploy <- function(bin,
         if (extension == "csv") {
           readr::write_csv(BDD, paste0(path, bin, "_datas.csv"))
         }
+        if (extension == "rda") {
+          save(BDD, file = paste0(path, bin, "_datas.rda"))
+        }
 
         print(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
 
@@ -126,19 +135,22 @@ tcatdeploy <- function(bin,
 
       if (deploy == TRUE) {
 
+        BDD <- extract
+
         # Save
         if (extension == "tsv") {
-          readr::write_tsv(extract, paste0(path, bin, "_datas.tsv"))
+          readr::write_tsv(BDD, paste0(path, bin, "_datas.tsv"))
         }
         if (extension == "csv") {
-          readr::write_csv(extract, paste0(path, bin, "_datas.csv"))
+          readr::write_csv(BDD, paste0(path, bin, "_datas.csv"))
+        }
+        if (extension == "rda") {
+          save(BDD, file = paste0(path, bin, "_datas.rda"))
         }
 
         print(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
 
       }
-
-      BDD <- extract
 
     }
 
@@ -153,4 +165,3 @@ tcatdeploy <- function(bin,
   }
 
 # Alléger par anti_join
-# Ajouter extension Rdata
