@@ -33,7 +33,7 @@ tcattempo <- function(bin,
   endtimestamp <- lubridate::as_datetime(paste(endday, endtime))
 
   # Connection to database
-  conn <- RMariaDB::dbConnect(RMariaDB::MySQL(),
+  conn <- RMariaDB::dbConnect(RMariaDB::MariaDB(),
                             dbname = database,
                             user = username,
                             password = pass,
