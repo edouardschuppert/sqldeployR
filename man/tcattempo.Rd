@@ -5,8 +5,9 @@
 \title{tcattempo}
 \usage{
 tcattempo(bin, hostname = "localhost", username = "tcatdbuser", pass,
-  database = "twittercapture", extension = "tsv", path = "./", startday,
-  endday = Sys.Date(), starttime = "00:00:00", endtime = "23:59:59")
+  database = "twittercapture", extension = "tsv", path = "./",
+  startday, endday = Sys.Date(), starttime = "00:00:00",
+  endtime = "23:59:59")
 }
 \arguments{
 \item{bin}{The bin name}
@@ -19,7 +20,7 @@ tcattempo(bin, hostname = "localhost", username = "tcatdbuser", pass,
 
 \item{database}{The name of the database. Default set to twittercapture}
 
-\item{extension}{The chosen extension for the deployment of the database. Default set to a tsv format}
+\item{extension}{The chosen extension for the deployment of the database. Possible choices : "csv", "tsv". Default set to a "tsv" format}
 
 \item{path}{File path. Defaults set to current directory}
 

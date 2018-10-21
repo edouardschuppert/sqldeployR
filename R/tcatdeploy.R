@@ -14,19 +14,19 @@
 #' @export
 
 tcatdeploy <- function(bin,
-                      hostname = "localhost",
-                      username = "tcatdbuser",
-                      pass,
-                      database = "twittercapture",
-                      deploy = TRUE,
-                      extension = "tsv",
-                      path = "./") {
+                       hostname = "localhost",
+                       username = "tcatdbuser",
+                       pass,
+                       database = "twittercapture",
+                       deploy = TRUE,
+                       extension = "tsv",
+                       path = "./") {
 
   # Formating path
   if (stringr::str_detect(path, "/$") == FALSE) path <- paste0(path, "/")
 
   # Connection to database
-  conn <- RMySQL::dbConnect(RMySQL::MySQL(),
+  conn <- RMariaDB::dbConnect(RMariaDB::MySQL(),
                     dbname = database,
                     user = username,
                     password = pass,
@@ -35,7 +35,7 @@ tcatdeploy <- function(bin,
 
   DBI::dbGetQuery(conn,"set names utf8")
 
-  conn_table <- dplyr::tbl(conn, paste0(bin, "_tweets"))
+  conn_table <- dplyr::tbl(conn, from = paste0(bin, "_tweets"))
 
     # Sending request & processing data
     extract <- conn_table %>%

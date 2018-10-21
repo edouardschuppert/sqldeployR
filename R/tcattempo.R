@@ -7,7 +7,7 @@
 #' @param username The username to access the database. Default set to tcatdbuser
 #' @param pass The password to access the database
 #' @param database The name of the database. Default set to twittercapture
-#' @param extension The chosen extension for the deployment of the database. Default set to a tsv format
+#' @param extension The chosen extension for the deployment of the database. Possible choices : "csv", "tsv". Default set to a "tsv" format
 #' @param path File path. Defaults set to current directory
 #' @param startday The first day of the period you want to select
 #' @param endday The last day of the period you want to select
@@ -33,7 +33,7 @@ tcattempo <- function(bin,
   endtimestamp <- lubridate::as_datetime(paste(endday, endtime))
 
   # Connection to database
-  conn <- RMySQL::dbConnect(RMySQL::MySQL(),
+  conn <- RMariaDB::dbConnect(RMariaDB::MySQL(),
                             dbname = database,
                             user = username,
                             password = pass,

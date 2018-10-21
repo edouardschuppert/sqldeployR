@@ -1,7 +1,7 @@
 Package: sqldeployR
 Type: Package
 Title: Deploy databases
-Version: 0.1.1
+Version: 1.0.0
 Imports:
     DBI,
     dplyr,
@@ -10,7 +10,7 @@ Imports:
     plyr,
     readr,
     rex,
-    RMySQL,
+    RMariaDB,
     stringr
 Authors@R: person("Edouard", "Schuppert", email = "edouard.schuppert@gmail.com",
   role = c("aut", "cre"))
@@ -21,4 +21,4 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/edouardschuppert/sqldeployr
 BugReports: https://github.com/edouardschuppert/sqldeployr/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
