@@ -10,7 +10,7 @@ Imports:
     plyr,
     readr,
     rex,
-    RMariaDB,
+    RMySQL,
     stringr
 Authors@R: person("Edouard", "Schuppert", email = "edouard.schuppert@gmail.com",
   role = c("aut", "cre"))

@@ -26,14 +26,14 @@ tcatdeploy <- function(bin,
   if (stringr::str_detect(path, "/$") == FALSE) path <- paste0(path, "/")
 
   # Connection to database
-  conn <- RMariaDB::dbConnect(RMariaDB::MariaDB(),
-                    dbname = database,
-                    user = username,
-                    password = pass,
-                    host = hostname,
-                    encoding = "utf-8")
+  conn <- RMySQL::dbConnect(RMySQL::MySQL(),
+                            dbname = database,
+                            user = username,
+                            password = pass,
+                            host = hostname,
+                            encoding = "utf-8")
 
-  DBI::dbGetQuery(conn,"set names utf8")
+  DBI::dbGetQuery(conn, "set names utf8")
 
   conn_table <- dplyr::tbl(conn, from = paste0(bin, "_tweets"))
 
@@ -47,7 +47,6 @@ tcatdeploy <- function(bin,
                     in_reply_to_status_id = as.character(in_reply_to_status_id)) %>%
       dplyr::select(-withheld_scope, -withheld_copyright, -from_user_utcoffset, -from_user_timezone, -from_user_withheld_scope,
                     -geo_lat, -geo_lng) %>%
-      # dplyr::anti_join(BDD, by = "id")
       dplyr::collect() %>%
       dplyr::mutate(created_at = lubridate::as_datetime(created_at),
                     from_user_created_at = lubridate::as_datetime(from_user_created_at)) %>%
@@ -66,7 +65,6 @@ tcatdeploy <- function(bin,
 
 
     DBI::dbDisconnect(conn)
-
 
 
     # Case 1 : updating
@@ -164,5 +162,3 @@ tcatdeploy <- function(bin,
     BDD
 
   }
-
-# Alléger par anti_join

@@ -7,6 +7,7 @@
 #' @param username The username to access the database. Default set to tcatdbuser
 #' @param pass The password to access the database
 #' @param database The name of the database. Default set to twittercapture
+#' @param deploy Save the datas as a file. Default set to TRUE
 #' @param extension The chosen extension for the deployment of the database. Possible choices : "csv", "tsv". Default set to a "tsv" format
 #' @param path File path. Defaults set to current directory
 #' @param startday The first day of the period you want to select
@@ -21,6 +22,7 @@ tcattempo <- function(bin,
                       username = "tcatdbuser",
                       pass,
                       database = "twittercapture",
+                      deploy = TRUE,
                       extension = "tsv",
                       path = "./",
                       startday,
@@ -32,13 +34,16 @@ tcattempo <- function(bin,
   starttimestamp <- lubridate::as_datetime(paste(startday, starttime))
   endtimestamp <- lubridate::as_datetime(paste(endday, endtime))
 
+  # Formating path
+  if (stringr::str_detect(path, "/$") == FALSE) path <- paste0(path, "/")
+
   # Connection to database
-  conn <- RMariaDB::dbConnect(RMariaDB::MariaDB(),
-                            dbname = database,
-                            user = username,
-                            password = pass,
-                            host = hostname,
-                            encoding = "utf-8")
+  conn <- RMySQL::dbConnect(RMySQL::MySQL(),
+                              dbname = database,
+                              user = username,
+                              password = pass,
+                              host = hostname,
+                              encoding = "utf-8")
 
   DBI::dbGetQuery(conn, "set names utf8")
 
@@ -62,23 +67,45 @@ tcattempo <- function(bin,
     dplyr::select(id, created_at, from_user_id, from_user_name, from_user_realname, text, lang, from_user_lang, retweet_count, favorite_count, location, source,
            retweet_id, to_user_id, to_user_name, in_reply_to_status_id, quoted_status_id, from_user_followercount, from_user_friendcount, from_user_favourites_count,
            from_user_tweetcount, from_user_description,  from_user_verified, from_user_created_at, from_user_listed, from_user_url, from_user_profile_image_url,
-           filter_level, possibly_sensitive)
+           filter_level, possibly_sensitive) %>%
+    dplyr::arrange(plyr::desc(created_at)) %>%
+    dplyr::mutate(is_retweet = stringr::str_detect(text, rex::rex(start, "RT @"))) %>%
+    dplyr::mutate(retweet_from_user_name = stringr::str_extract(text, rex::rex("RT ", "@", any_non_blanks %or% any_non_spaces, maybe(punct) %or% space %or% end))) %>%
+    dplyr::mutate(retweet_from_user_name = stringr::str_remove_all(retweet_from_user_name,"RT ")) %>%
+    dplyr::mutate(retweet_from_user_name = stringr::str_remove_all(retweet_from_user_name,"@")) %>%
+    dplyr::mutate(retweet_from_user_name = stringr::str_remove_all(retweet_from_user_name,"[[:space:]]*")) %>%
+    dplyr::mutate(retweet_from_user_name = stringr::str_remove_all(retweet_from_user_name,"(?:(?::|,)|;)")) %>%
+    dplyr::mutate(retweet_from_user_name = stringr::str_remove_all(retweet_from_user_name,"\\)"))
 
   DBI::dbDisconnect(conn)
 
   # Save
-  if (file.exists(paste0(path, bin, "_datas.", extension)) == FALSE) {
+  BDD <- extract
 
+  if (deploy == TRUE) {
+
+    # Save
     if (extension == "tsv") {
-      readr::write_tsv(extract, paste0(path, bin, "_datas.tsv"))
+      readr::write_tsv(BDD, paste0(path, bin, "_datas.tsv"))
     }
     if (extension == "csv") {
-      readr::write_csv(extract, paste0(path, bin, "_datas.csv"))
+      readr::write_csv(BDD, paste0(path, bin, "_datas.csv"))
     }
+    if (extension == "rda") {
+      save(BDD, file = paste0(path, bin, "_datas.rda"))
+    }
+
+    print(paste0("TCAT ", bin, " (from ", startday," to ", endday,") deployed in ", path, bin, "_datas.", extension))
 
   }
 
-  # Show result message
-  print(paste0("TCAT ", bin, " (from ", startday," to ", endday,") deployed in ", path, bin, "_datas.", extension))
+  if (deploy == FALSE) {
+
+    print(paste0("TCAT ", bin, " NOT deployed as file."))
+
+  }
+
+  BDD
+
 
 }
