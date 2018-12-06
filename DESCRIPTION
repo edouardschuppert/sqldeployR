@@ -1,7 +1,7 @@
 Package: sqldeployR
 Type: Package
 Title: Deploy databases
-Version: 1.0.0
+Version: 1.0.1
 Imports:
     DBI,
     dplyr,
@@ -21,4 +21,4 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/edouardschuppert/sqldeployr
 BugReports: https://github.com/edouardschuppert/sqldeployr/issues
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

@@ -132,9 +132,9 @@ tcatdeploy <- function(bin,
     # Case 2 : creation
     if (file.exists(paste0(path, bin, "_datas.", extension)) == FALSE) {
 
-      if (deploy == TRUE) {
+      BDD <- extract
 
-        BDD <- extract
+      if (deploy == TRUE) {
 
         # Save
         if (extension == "tsv") {
