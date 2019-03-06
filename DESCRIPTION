@@ -1,7 +1,7 @@
 Package: sqldeployR
 Type: Package
 Title: Deploy databases
-Version: 1.0.2
+Version: 1.1.0
 Imports:
     DBI,
     dplyr,
@@ -11,10 +11,11 @@ Imports:
     readr,
     rex,
     RMySQL,
-    stringr
+    stringr,
+    RMariaDB
 Authors@R: person("Edouard", "Schuppert", email = "edouard.schuppert@gmail.com",
   role = c("aut", "cre"))
-Description: Package for deploying MySQL databases to an R directory as a csv / tsv file.
+Description: Package for deploying SQL databases in an R directory as a file.
 Depends: R (>= 3.4.0)
 License: CC0
 Encoding: UTF-8
