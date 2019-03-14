@@ -5,8 +5,8 @@
 \title{tcatdeploy}
 \usage{
 tcatdeploy(bin, hostname = "localhost", username = "tcatdbuser", pass,
-  database = "twittercapture", deploy = TRUE, extension = "tsv",
-  path = "./")
+  database = "twittercapture", deploy = TRUE, extension = "rda",
+  path = "temp/")
 }
 \arguments{
 \item{bin}{The bin name}
@@ -21,7 +21,7 @@ tcatdeploy(bin, hostname = "localhost", username = "tcatdbuser", pass,
 
 \item{deploy}{Save the datas as a file. Default set to TRUE}
 
-\item{extension}{The chosen extension for the deployment of the database. Possible choices : "csv", "tsv", "rda". Default set to a "tsv" format}
+\item{extension}{The chosen extension for the deployment of the database. Possible choices : "csv", "tsv", "rda". Default set to a "rda" format}
 
 \item{path}{File path. Defaults set to current directory}
 }

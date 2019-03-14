@@ -5,7 +5,7 @@
 \title{call_db}
 \usage{
 call_db(tableName, hostname = "localhost", username, pass, database,
-  path = "temp/")
+  deploy = TRUE, path = "temp/")
 }
 \arguments{
 \item{tableName}{The table name.}
@@ -17,6 +17,8 @@ call_db(tableName, hostname = "localhost", username, pass, database,
 \item{pass}{The password to access the database}
 
 \item{database}{The name of the database.}
+
+\item{deploy}{Save the datas as a file. Default set to TRUE}
 
 \item{path}{File path. Defaults set as "temp"}
 }

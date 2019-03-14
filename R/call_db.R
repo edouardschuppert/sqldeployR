@@ -13,6 +13,7 @@
 #' @param username The username to access the database.
 #' @param pass The password to access the database
 #' @param database The name of the database.
+#' @param deploy Save the datas as a file. Default set to TRUE
 #' @param path File path. Defaults set as "temp"
 #' @return Returns a dataframe
 #' @export
@@ -22,6 +23,7 @@ call_db <- function(tableName,
                     username,
                     pass,
                     database,
+                    deploy = TRUE,
                     path = "temp/") {
 
   if (str_detect(path, "/$") == FALSE) path <- paste0(path, "/")
@@ -45,7 +47,7 @@ call_db <- function(tableName,
 
     dbDisconnect(conn)
 
-    save(corpus, file = paste0(path, tableName, ".rda"))
+    if (deploy == TRUE) save(corpus, file = paste0(path, tableName, ".rda"))
 
     # Spare RAM
     rm(conn)
@@ -55,7 +57,3 @@ call_db <- function(tableName,
   corpus
 
 }
-
-# Rajouter possibilité de ne pas déployer
-# Rajouter possibilité de déployer dans un format différent
-# Rajouter possibilité de déployer dans d'autres dossiers ou à la racine

@@ -1,7 +1,7 @@
 Package: sqldeployR
 Type: Package
 Title: Deploy databases
-Version: 1.1.0
+Version: 2.0.0
 Imports:
     DBI,
     dplyr,
@@ -10,7 +10,6 @@ Imports:
     plyr,
     readr,
     rex,
-    RMySQL,
     stringr,
     RMariaDB
 Authors@R: person("Edouard", "Schuppert", email = "edouard.schuppert@gmail.com",
