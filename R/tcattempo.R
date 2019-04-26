@@ -1,7 +1,8 @@
-#' tcatdeploy
+#' tcattempo
 #'
 #' Deploy a DMI-TCAT database in an R directory as a csv / tsv file with UTF-8 encoding.
 #'
+#' @importFrom rlang enquo
 #' @importFrom stringr str_detect
 #' @importFrom RMariaDB dbConnect
 #' @importFrom RMariaDB MariaDB
@@ -18,20 +19,34 @@
 #' @param username The username to access the database. Default set to tcatdbuser
 #' @param pass The password to access the database
 #' @param database The name of the database. Default set to twittercapture
+#' @param coltime The column on which time filtering is performed. Default set on "created_at"
+#' @param startday The start day of the sample
+#' @param endday The end day of the sample. Default set on today
+#' @param starttime The start time of the sample. Default set to 00:00:00
+#' @param endtime The end time of the sample. Default set to 23:59:59
 #' @param deploy Save the datas as a file. Default set to TRUE
 #' @param extension The chosen extension for the deployment of the database. Possible choices : "csv", "tsv", "rda". Default set to a "rda" format
 #' @param path File path. Defaults set to current directory
 #' @return Returns a csv / tsv file, with a UTF-8 encoding
 #' @export
 
-tcatdeploy <- function(bin,
-                       hostname = "localhost",
-                       username = "tcatdbuser",
-                       pass,
-                       database = "twittercapture",
-                       deploy = TRUE,
-                       extension = "rda",
-                       path = "temp/") {
+tcattempo <- function(bin,
+                      hostname = "localhost",
+                      username = "tcatdbuser",
+                      pass,
+                      database = "twittercapture",
+                      coltime = created_at,
+                      startday,
+                      endday = Sys.Date(),
+                      starttime = "00:00:00",
+                      endtime = "23:59:59",
+                      deploy = TRUE,
+                      extension = "rda",
+                      path = "temp/") {
+
+  coltime <- enquo(coltime)
+  start_coltime <- paste(startday, starttime)
+  end_coltime <- paste(endday, endtime)
 
   # Formating path & creating directory if necessary
   if (str_detect(path, "/$") == FALSE) path <- paste0(path, "/")
@@ -51,6 +66,7 @@ tcatdeploy <- function(bin,
 
   # Sending request & processing data
   extract <- conn_table %>%
+    filter(coltime > start_coltime & coltime < end_coltime) %>%
     select(-.data$withheld_scope, -.data$withheld_copyright, -.data$from_user_utcoffset, -.data$from_user_timezone, -.data$from_user_withheld_scope, -.data$geo_lat, -.data$geo_lng) %>%
     collect() %>%
     mutate(id = as.character(id),
