@@ -50,7 +50,7 @@ tcattempo <- function(bin,
 
   # Formating path & creating directory if necessary
   if (str_detect(path, "/$") == FALSE) path <- paste0(path, "/")
-  if (file.exists(path) == FALSE) dir.create(path)
+  if (file.exists(path) == FALSE & deploy == TRUE) dir.create(path)
 
   # Connection to database
   conn <- dbConnect(MariaDB(),

@@ -28,7 +28,7 @@ call_db <- function(tableName,
 
   # Formating path & creating directory if necessary
   if (str_detect(path, "/$") == FALSE) path <- paste0(path, "/")
-  if (file.exists(path) == FALSE) dir.create(path)
+  if (file.exists(path) == FALSE & deploy == TRUE) dir.create(path)
 
   if ((paste0(tableName, ".rda") %in% list.files(path)) == TRUE) {
 
