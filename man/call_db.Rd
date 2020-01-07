@@ -4,8 +4,15 @@
 \alias{call_db}
 \title{call_db}
 \usage{
-call_db(tableName, hostname = "localhost", username, pass, database,
-  deploy = TRUE, path = "temp/")
+call_db(
+  tableName,
+  hostname = "localhost",
+  username,
+  pass,
+  database,
+  deploy = TRUE,
+  path = "temp/"
+)
 }
 \arguments{
 \item{tableName}{The table name.}

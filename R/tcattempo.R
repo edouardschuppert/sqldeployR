@@ -45,8 +45,8 @@ tcattempo <- function(bin,
                       path = "temp/") {
 
   coltime <- enquo(coltime)
-  start_coltime <- paste(startday, starttime)
-  end_coltime <- paste(endday, endtime)
+  start_coltime <- as.character(as_datetime(paste(startday, starttime)))
+  end_coltime <- as.character(as_datetime(paste(endday, endtime)))
 
   # Formating path
   if (str_detect(path, "/$") == FALSE) path <- paste0(path, "/")

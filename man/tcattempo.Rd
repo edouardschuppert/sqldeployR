@@ -4,10 +4,21 @@
 \alias{tcattempo}
 \title{tcattempo}
 \usage{
-tcattempo(bin, hostname = "localhost", username = "tcatdbuser", pass,
-  database = "twittercapture", coltime = created_at, startday,
-  endday = Sys.Date(), starttime = "00:00:00", endtime = "23:59:59",
-  deploy = TRUE, extension = "rda", path = "temp/")
+tcattempo(
+  bin,
+  hostname = "localhost",
+  username = "tcatdbuser",
+  pass,
+  database = "twittercapture",
+  coltime = created_at,
+  startday,
+  endday = Sys.Date(),
+  starttime = "00:00:00",
+  endtime = "23:59:59",
+  deploy = TRUE,
+  extension = "rda",
+  path = "temp/"
+)
 }
 \arguments{
 \item{bin}{The bin name}

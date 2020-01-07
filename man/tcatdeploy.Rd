@@ -4,9 +4,16 @@
 \alias{tcatdeploy}
 \title{tcatdeploy}
 \usage{
-tcatdeploy(bin, hostname = "localhost", username = "tcatdbuser", pass,
-  database = "twittercapture", deploy = TRUE, extension = "rda",
-  path = "temp/")
+tcatdeploy(
+  bin,
+  hostname = "localhost",
+  username = "tcatdbuser",
+  pass,
+  database = "twittercapture",
+  deploy = TRUE,
+  extension = "rda",
+  path = "temp/"
+)
 }
 \arguments{
 \item{bin}{The bin name}
