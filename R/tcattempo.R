@@ -48,9 +48,8 @@ tcattempo <- function(bin,
   start_coltime <- paste(startday, starttime)
   end_coltime <- paste(endday, endtime)
 
-  # Formating path & creating directory if necessary
+  # Formating path
   if (str_detect(path, "/$") == FALSE) path <- paste0(path, "/")
-  if (file.exists(path) == FALSE) dir.create(path)
 
   # Connection to database
   conn <- dbConnect(MariaDB(),
@@ -149,7 +148,10 @@ tcattempo <- function(bin,
           save(BDD, file = paste0(path, bin, "_datas.rda"))
         }
 
-        print(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
+        # Creating directory if necessary
+        if (file.exists(path) == FALSE) dir.create(path)
+
+        message(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
 
       }
 
@@ -173,7 +175,10 @@ tcattempo <- function(bin,
           save(BDD, file = paste0(path, bin, "_datas.rda"))
         }
 
-        print(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
+        # Creating directory if necessary
+        if (file.exists(path) == FALSE) dir.create(path)
+
+        message(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
 
       }
 
@@ -181,7 +186,7 @@ tcattempo <- function(bin,
 
     if (deploy == FALSE) {
 
-      print(paste0("TCAT ", bin, " NOT deployed as file."))
+      message(paste0("TCAT ", bin, " NOT deployed as file."))
 
     }
 

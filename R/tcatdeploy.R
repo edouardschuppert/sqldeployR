@@ -133,7 +133,7 @@ tcatdeploy <- function(bin,
           save(BDD, file = paste0(path, bin, "_datas.rda"))
         }
 
-        print(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
+        message(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
 
       }
 
@@ -157,7 +157,7 @@ tcatdeploy <- function(bin,
           save(BDD, file = paste0(path, bin, "_datas.rda"))
         }
 
-        print(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
+        message(paste0("TCAT ", bin, " deployed in ", path, bin, "_datas.", extension))
 
       }
 
@@ -165,7 +165,7 @@ tcatdeploy <- function(bin,
 
     if (deploy == FALSE) {
 
-      print(paste0("TCAT ", bin, " NOT deployed as file."))
+      message(paste0("TCAT ", bin, " NOT deployed as file."))
 
     }
 
